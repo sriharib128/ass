@@ -3,7 +3,7 @@
 void merge_two_files(FILE *f1,FILE *f2,FILE *f3) 
 { 
     int flag1=0,flag2=0;
-    char temp1[20];char temp2[20];
+    char temp1[110];char temp2[110];
     int check=0;
     while(1)
     {

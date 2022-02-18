@@ -1,4 +1,6 @@
 #include "include.h"
+extern char * f_name;
+char *L[N], *R[N];
 
 void merge(char *arr[], int l, int m, int r)
 {
@@ -6,7 +8,6 @@ void merge(char *arr[], int l, int m, int r)
 	int n1 = m - l + 1;
 	int n2 = r - m;
 
-	char *L[n1], *R[n2];
 	for (i = 0; i < n1; i++)
 	{
 		L[i]=(char*)malloc(strlen(arr[l+i])+1);
