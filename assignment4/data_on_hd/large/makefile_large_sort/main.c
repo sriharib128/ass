@@ -1,13 +1,15 @@
 #include "include.h"
+char *x[N+10];
 
 int main ( int argc, char *argv[] ) 
 { 
     FILE * fp=fopen(argv[1],"r");
-    char *x[N+10];
 	int ret =0;
 	long long int ct=0;
-
+	long long int round =0;
+	int rem=1;
     //sorting the first N elements
+	
 	while(1)
 	{	
 		char tempname[110];
@@ -17,122 +19,96 @@ int main ( int argc, char *argv[] )
 		x[ct]=(char*)malloc(strlen(tempname)+1);
 		strcpy(x[ct++],tempname);
 		if(ct==N)
-		{	
-			printf("> First N started");
-	    	FILE *f1=fopen("f1.txt","w");
+		{	round++;
+			// printf("> First N started");
+			char * f_name = name(round);
+	    	FILE *f1=fopen(f_name,"w");
 			mergeSort(x,0,ct-1);
 			for(int i=0;i<N;i++)
         		fprintf(f1,"%s\n",x[i]);
 			fclose(f1);	
+			free(f_name);
 			for(int i=0;i<N;i++)
 				free(x[i]);
-			printf("==> completed round=0 \n");
+			// printf("==> completed round=1 \n");
 			ct=0;
+			rem=0;
         	break;
         }
 
 	}
 	
     //sorting after that
-    long long int round =0;
-    int rem=1;
-    while(1)
-	{	
-		char tempname[110];
-		ret = fscanf(fp,"%s",tempname);
-		if(ret == (-1) )
-		{	break; }
-		rem=1;
-		x[ct]=(char*)malloc(strlen(tempname)+1);
-		strcpy(&x[ct++][0],tempname);
-		if(ct==N)
+    if(rem==0)
+	{
+		while(1)
 		{	
+			char tempname[110];
+			ret = fscanf(fp,"%s",tempname);
+			if(ret == (-1) )
+			{	break; }
+			rem=1;
+			x[ct]=(char*)malloc(strlen(tempname)+1);
+			strcpy(&x[ct++][0],tempname);
+			if(ct==N)
+			{	
+				round++;
+				// printf("> Starting %lld N ==> ",round);
+				
+				char * f_name = name(round);
+				FILE *f2=fopen(f_name,"w");
+				mergeSort(x,0,ct-1);
+				for(int i=0;i<N;i++)
+					fprintf(f2,"%s\n",x[i]);
+				fclose(f2);
+				free(f_name);
+	// 			emptying the array and memory so that the next N elements can be sorted
+				for(int i=0;i<N;i++)
+					free(x[i]);
+				ct=0;
+				rem=0;
+				// printf(">completed %lld N\n",round);
+			}
+		}
+		
+
+		if(rem==1)
+		{	
+			// printf("> remaining after %lld N ==> ",round);
 			round++;
-			printf("> Starting %lld N ==> ",round);
-			
-			FILE *f2=fopen("f2.txt","w");
+			char * f_name = name(round);
+			FILE *f2=fopen(f_name,"w");
 			mergeSort(x,0,ct-1);
-			for(int i=0;i<N;i++)
+			for(int i=0;i<ct;i++)
 				fprintf(f2,"%s\n",x[i]);
 			fclose(f2);
-			
-			f2=fopen("f2.txt","r");
-			FILE *f1,*f3;
-			
-			if(round & 1)
-			{
-				f1=fopen("f1.txt","r");
-                f3=fopen("f3.txt","w");
-				merge_two_files(f1,f2,f3);
-				fclose(f1);
-				fclose(f2);
-    			fclose(f3);
-				remove("f1.txt");
-				remove("f2.txt");
-			}
-			else
-			{
-				f1=fopen("f1.txt","w");
-                f3=fopen("f3.txt","r");
-				merge_two_files(f3,f2,f1);
-				fclose(f1);
-				fclose(f2);
-    			fclose(f3);
-				remove("f3.txt");
-				remove("f2.txt");
-			}
-			
-// 			emptying the array and memory so that the next N elements can be sorted
-			for(int i=0;i<N;i++)
+			free(f_name);
+			for(int i=0;i<ct;i++)
 				free(x[i]);
-			ct=0;
-            rem=0;
-			printf(">completed %lld N\n",round);
+			// printf("> completed remaining %lld N\n",(round-1));
 		}
-	}
-
-    if(rem==1)
-    {	printf("> remaining after %lld N ==> ",round);
-		FILE *f2=fopen("f2.txt","w");
-		mergeSort(x,0,ct-1);
-		for(int i=0;i<ct;i++)
-			fprintf(f2,"%s\n",x[i]);
-		fclose(f2);
-		
-		f2=fopen("f2.txt","r");
-		FILE *f1,*f3;
-        if(!(round&1))
-		{
-			f1=fopen("f1.txt","r");
-            f3=fopen("f3.txt","w");
-			merge_two_files(f1,f2,f3);
-		}
-		else
-		{
-			f1=fopen("f1.txt","w");
-            f3=fopen("f3.txt","r");
-			merge_two_files(f3,f2,f1);
-		}
-		fclose(f1);
-		fclose(f2);
-    	fclose(f3);
-		printf("> completed remaining %lld N\n",round);
-    }
-
-	if(!(round&1))
-	{	
-		rename("f3.txt","o_p_sorted_file.txt");
-		remove("f2.txt");
-		remove("f1.txt");
 	}
 	else
-	{	
-		rename("f1.txt","o_p_sorted_file.txt");
-		remove("f2.txt");
-		remove("f3.txt");
+	{
+		// printf("> remaining after %lld N ==> ",round);
+			round++;
+			char * f_name = name(round);
+			FILE *f2=fopen(f_name,"w");
+			mergeSort(x,0,ct-1);
+			for(int i=0;i<ct;i++)
+				fprintf(f2,"%s\n",x[i]);
+			fclose(f2);
+			free(f_name);
+			for(int i=0;i<ct;i++)
+				free(x[i]);
+			// printf("> completed remaining %lld N and now in round %lld\n",(round-1),round);	
 	}
-	for(int i=0;i<ct;i++)
-		free(x[i]);
-    fclose(fp);
+	
+	fclose(fp);
+//completed sorting N words taken at a time
+
+// merging the n sorted files
+mergeFiles(round,argv[2]);
+
 	return 0;
 }
