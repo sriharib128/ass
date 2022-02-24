@@ -9,12 +9,12 @@ int main ( int argc, char *argv[] )
     FILE * fp=fopen(argv[2],"r");
     char *x[N+10];
 	int ret =0;
-	int n=1;
+	int n=1000;
 	while(n--)
 	{
 		while(ret !=-1)
 		{	
-			char tempname[1000];
+			char tempname[110];
 			ret = fscanf(fp,"%s",tempname);
 			if(ret==(-1))
 				break;
