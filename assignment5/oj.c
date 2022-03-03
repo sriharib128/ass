@@ -77,7 +77,7 @@ int main()
         i=temp+1;
         i_temp++;
     }
-// /*
+/*
     for(int i=0;i<i_temp;i++)
     {   
         printf("%lld %lld ",heights[i][0],heights[i][1]);
@@ -89,7 +89,7 @@ int main()
         printf("\n");
     }
     printf("\n");
-// */
+*/
     // long long int prefix_1[100][100]={};
     for(int i=0;i<i_temp;i++)
     {   
@@ -119,7 +119,7 @@ int main()
                 prefix[i][j]=find_min(i-1,j+1);
         }
     }
-// /*  
+/*  
     for(int i=0;i<i_temp;i++)
     {   
         printf("%lld ",prefix[i][0]);
@@ -130,7 +130,7 @@ int main()
         printf("\n");
     }
     printf("\n");
-// */
+*/
 // we have created an array which shows the max number of buildings 
 // we can go to from all building
 
@@ -176,8 +176,8 @@ int main()
     }
     // printf("%d\n",count);
     // printf("i_temp = %d\n",i_temp);
-    printf("-----------------------------------------------------\n");
-    printf("-----------------------------------------------------\n");
+    // printf("-----------------------------------------------------\n");
+    // printf("-----------------------------------------------------\n");
 // sales man goes to his friends house
 
     int k;
@@ -190,7 +190,7 @@ int main()
     for(j=0;j<M;)
     {   
         int row,column;
-        printf("\n%d %d %lld\n",i-1,j+1,prefix[k][0]);
+        // printf("\n%d %d %lld\n",i-1,j+1,prefix[k][0]);
         find_max(M,(k-1),i-1,j+1,&row,&column);
         if(row == (-1)  && column==(-1))
         {
@@ -198,13 +198,13 @@ int main()
             break;
         }
         ct++;
-        printf("from %d %d to ",i-1,j+1);
+        // printf("from %d %d to ",i-1,j+1);
         i=row;j=column;
-        printf("%d %d\n",i,j);
+        // printf("%d %d\n",i,j);
     }
     if(k==(i_temp-1))
     {
-        printf("k=%d i_temp=%d M=%d\n",k,i_temp,M);
+        // printf("k=%d i_temp=%d M=%d\n",k,i_temp,M);
         for(int l=1;l<M;l++)
             if(heights[i_temp-1][l]==1)
             {
@@ -213,17 +213,17 @@ int main()
                     break;  }
             }
     }
-    printf("\ncount till now = %d\n\n",ct);
-    printf("---------went to Mth building---------------------\n\n");
+    // printf("\ncount till now = %d\n\n",ct);
+    // printf("---------went to Mth building---------------------\n\n");
     if(flag==1)
     {
-        printf("flag ==01");
+        // printf("flag ==01");
         //no smaller buildin after mth building
-        printf("jumped from %d %d to ",i,j);
+        // printf("jumped from %d %d to ",i,j);
         i=k;j=M;
-        printf("%d %d\n\n",i,j);
+        // printf("%d %d\n\n",i,j);
         ct++;
-        printf("\ncount till now = %d\n\n",ct);
+        // printf("\ncount till now = %d\n\n",ct);
         flag=0;
     }
 // sales man must decide which house he must
@@ -232,44 +232,44 @@ int main()
     int flag2=0;
 
     find_max(N,0,(i_temp-1),(M+1),&row,&column);
-    printf("jumped from %d %d to ",i,j);
-    printf("%d %d\n\n",row,column);
+    // printf("jumped from %d %d to ",i,j);
+    // printf("%d %d\n\n",row,column);
 
     if(row == (-1)  && column==(-1))
         flag2=1;
     else
         ct++;
-    printf("count till now = %d\n\n",ct);
+    // printf("count till now = %d\n\n",ct);
 // from the building he jumped to
-    printf("---------------------------\n");
+    // printf("---------------------------\n");
     if(flag2==0)
     {   
-        printf("flag2 ==00");
+        // printf("flag2 ==00");
         flag=0;
         i=row;
         for(j=column;j<N;)
         {   
-            printf("\n%d %d\n",i-1,j+1);
+            // printf("\n%d %d\n",i-1,j+1);
             find_max(N,0,i-1,j+1,&row,&column);
             if(row == (-1)  && column==(-1))
             {
                 flag=1;
-                printf("breaked in flag2=0\n");
+                // printf("breaked in flag2=0\n");
                 break;
             }
             else
             {
                 ct++;
-                printf("from %d %d to",i-1,j+1);
+                // printf("from %d %d to",i-1,j+1);
                 i=row;j=column;
-                printf("% d %d\n",i,j);
-                printf("count till now = %d\n",ct);
+                // printf("% d %d\n",i,j);
+                // printf("count till now = %d\n",ct);
             }
         }
     }
     else
     {
-        printf("flag2=1\n");
+        // printf("flag2=1\n");
         int b=0;
         for(i=N-1;i>0;i--)
         {
@@ -277,7 +277,7 @@ int main()
                 if(heights[i][j]==1)
                 {
                     ct++;
-                    printf("count became %d\n",ct);
+                    // printf("count became %d\n",ct);
                     b=1;
                     break;
                 }
@@ -290,17 +290,17 @@ int main()
     if(flag==1)
     {
         int temp =j+1;
-        printf("flag = 1\n");
+        // printf("flag = 1\n");
         for(i=i-1;i>0;i--)
         {   
             int b=0;
             for(j=temp;j<=N;j++)
             {
-                printf("%d %d\n",i,j);
+                // printf("%d %d\n",i,j);
                 if(heights[i][j]==1)
                 {
                     ct++;
-                    printf("count became %d\n",ct);
+                    // printf("count became %d\n",ct);
                     b=1;
                     break;
                 }
@@ -309,60 +309,10 @@ int main()
                 break;
         }
     }
-    printf("%d\n",ct);
+    // printf("%d\n",ct);
     if(ct>count)
         printf("%d",ct);
     else
         printf("%d",count);
     return 0;
 }
-
-/*
-4 3
-9 9 9 9
-output 2
-
-8 6
-3 7 5 3 2 6 5 2
-output 4
-
-8 6
-2 8 7 6 3 7 5 2
-output 5
-
-9 5
-3 4 7 6 3 4 7 8 2
-output 5
-
-8 6
-2 8 7 6 3 7 5 2
-output 5
-
-8 6
-3 7 5 3 2 6 5 2
-output 4
-
-
-/*
-12 5
-1 6 3 15 5 4 5 4 4 6 3 2
-*/
-
-/*
-10 5
-3 6 3 5 2 4 1 6 5 4
-*/
-
-/*
-10 4
-3 6 3 5 4 6 5 4 3 2 
-*/
-
-/*
-7 5
-1 6 3 5 2 4 5
-*/
-/*
-4 2
-2 2 2 1
-*/
