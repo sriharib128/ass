@@ -209,8 +209,16 @@ int main()
             if(heights[i_temp-1][l]==1)
             {
                 if(prefix[i_temp-1][l]!=0)
-                {   ct--;
-                    break;  }
+                {   
+                     if(flag==0) 
+                    {   ct=1;
+                        break;  }
+                    else
+                    {
+                        ct=0;
+                        break;
+                    }  
+                  }
             }
     }
     // printf("\ncount till now = %d\n\n",ct);
