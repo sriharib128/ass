@@ -53,7 +53,6 @@ int main()
         i=temp+1;
         i_temp++;
     }
-
     for(int i=0;i<i_temp;i++)
     {   
         prefix_1[i][0]=heights[i][0];
@@ -127,6 +126,184 @@ int count = 0;
             // printf("jumped to %d %d\n",row,column);
         }
     }
-    printf("%d",count);    
+    // printf("count = %d\n",count);  
+    // ==========================================================
+    // ==========================================================
+    // ==========================================================
+// crossed without talking his friend's help 
+//------------------------------------------------------------
+    int k;
+    for(int i=i_temp-1;i>0;i--)
+    {
+        if(heights[i][M]==1)
+            k=i;
+    }
+    // printf("k= %d heights[k][0]=%lld\n",k,heights[k][0]);
+    //found the (k,M)height and position of hit friends building
+//----------------------------------------------------------
+// =======jumping on building before mth house
+    int ct = 0;
+    // printf("i_temp=%d\n",i_temp);
+    row_temp=i_temp-1;col_temp=1;
+    for(int b=0;b<M;)
+    {   
+        int i,j;
+        int row=-1, column=-1;
+        int max = 0;
+
+        int temp=0;
+        for(j=col_temp;j<M;j++)
+        {   
+            for(i = row_temp;i>k;i--)
+            {   
+                if(max<prefix[i][j])
+                {
+                    row=i;column=j;
+                    max=prefix[i][j];
+                }
+                else
+                {
+                    if(max!=0 && prefix[i][j]!=0)
+                        temp=row;
+                }
+            }
+            if(temp==(i_temp-1))
+                break;
+        }
+        if(row==(-1))
+        {   
+            // printf("ended at %d %d\n",row_temp,col_temp);
+            break;
+        }
+        else
+        {
+            ct++;
+            b=column;
+            col_temp=column+1;
+            row_temp=row-1;
+            // printf("jumped to %d %d\n",row,column);
+        }
+    }
+    // printf("count = %d\n\n",ct);  
+    // ==============counted till before mth building===============
+    row_temp=k;col_temp=M;
+    // printf("jumped to %d %d\n",row_temp,col_temp);
+    ct++;
+    // printf("count = %d\n\n",ct);
+    // ==============counted mth building==========================
+    // find max building he can jump to from mth building
+    row_temp=i_temp-1;
+    col_temp=M+1;
+    int i,j;
+    int row=-1, column=-1;
+    int max = 0;
+    int temp=0;
+    int terminate=0;
+    for(j=col_temp;j<=N;j++)
+    {   
+        for(i = row_temp;i>temp;i--)
+        {   
+            if(max<prefix[i][j])
+            {
+                row=i;column=j;
+                max=prefix[i][j];
+            }
+            else
+            {
+                if(max!=0 && prefix[i][j]!=0)
+                    temp=row;
+            }
+        }
+        if(temp==(i_temp-1))
+            break;
+    }
+    if(row==(-1))
+    {   
+        // printf("ended at %d %d\n",row_temp,col_temp);
+        int flag=0;
+        for(j=col_temp;j<=N;j++)
+        {    
+            for(i=row_temp;i>0;i--)
+                if(heights[i][j]==1)
+                {
+                    ct++;
+                    // printf("added %d %d\n",i,j);
+                    flag=1;
+                    break;
+                }
+            if(flag==1)
+                break;
+        }
+        terminate=1;        
+    }
+    else
+    {
+        ct++;
+        // printf("jumped to %d %d\n",row,column);
+        // printf("count = %d\n\n",ct);
+        col_temp=column+1;
+        row_temp=row-1;
+        // printf("searching again from %d %d\n",row_temp,col_temp);        
+    }
+    // ==============counting from mth building===================
+    if(terminate!=1)
+    {
+        for(int b=col_temp;b<=N;)
+        {   
+            row=-1;column=-1;
+            max = 0;
+            temp=0;
+            for(j=col_temp;j<=N;j++)
+            {   
+                for(i = row_temp;i>temp;i--)
+                {   
+                    if(max<prefix[i][j])
+                    {
+                        row=i;column=j;
+                        max=prefix[i][j];
+                    }
+                    else
+                    {
+                        if(max!=0 && prefix[i][j]!=0)
+                            temp=row;
+                    }
+                }
+                if(temp==(i_temp-1))
+                    break;
+            }
+            if(row==(-1))
+            {   
+                // printf("ended at %d %d\n",row_temp,col_temp);
+                int flag=0;
+                for(j=col_temp;j<=N;j++)
+                {    
+                    for(i=row_temp;i>0;i--)
+                        if(heights[i][j]==1)
+                        {
+                            ct++;
+                            // printf("added %d %d\n",i,j);
+                            flag=1;
+                            break;
+                        }
+                    if(flag==1)
+                        break;
+                }
+                break;
+            }
+            else
+            {
+                ct++;
+                b=column;
+                col_temp=column+1;
+                row_temp=row-1;
+                // printf("jumped to %d %d\n",row,column);
+            }
+        }
+    }
+    // printf("count_new = %d\n",ct); 
+    if(ct>count)
+        printf("%d",ct); 
+    else
+        printf("%d",count);
     return 0;
 }
